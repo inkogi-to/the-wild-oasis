@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Header from "../src/ui/Header";
+import Sidebar from "../src/ui/Sidebar";
 import styled from "styled-components";
 
 const StyledAppLayout = styled.div`
