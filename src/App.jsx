@@ -2,7 +2,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 
-import AppLayout from "./ui/AppLayout";
+import AppLayout from "../public/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Cabins from "./pages/Cabins";
