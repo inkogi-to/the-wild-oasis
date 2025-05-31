@@ -61,7 +61,6 @@ const StyledButton = styled.button`
 `;
 
 function Button({ variation = "primary", size = "medium", ...rest }) {
-  console.log(variation, size, rest);
   return <StyledButton $variation={variation} $size={size} {...rest} />;
 }
 
