@@ -22,7 +22,7 @@ const FilterButton = styled.button`
     `}
 
   border-radius: var(--border-radius-sm);
-  font-weight: 500;
+font-weight: 500;
   font-size: 1.4rem;
   /* To give the same height as select */
   padding: 0.44rem 0.8rem;
