@@ -21,8 +21,7 @@ export async function createEditCabin(newCabin, id) {
   let query = supabase.from("cabins");
 
   // CREATED
-  if (!id)
-    query = query.insert([{ ...newCabin, image: imagePath }]);
+  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
   // UPDATED
   if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
@@ -36,7 +35,7 @@ export async function createEditCabin(newCabin, id) {
     throw new Error("Cabin could not be created");
   }
 
-  const { data, error: storageError } = await supabase.storage
+  const { error: storageError } = await supabase.storage
     .from("cabin-images")
     .upload(imageName, newCabin.image);
 
@@ -46,7 +45,7 @@ export async function createEditCabin(newCabin, id) {
 
     throw new Error("Image upload failed and cabin was rolled back");
   }
-  return data;
+  return insertData;
 }
 
 export async function updateCabin(id, updatedCabin) {
