@@ -5,15 +5,16 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useCreateCabin } from "./useCreateCabin";
 import { createEditCabin } from "../../services/apiCabins";
 import { toast } from "react-hot-toast";
 import FormRow from "../../ui/FormRow";
 
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...editValue } = cabinToEdit;
-  console.log("editValue", editValue);
-  console.log("editId", editId);
-  
+  const { isCreating, createCabin } = useCreateCabin();
+
+
   const isEditSession = Boolean(editId);
   const {
     register,
@@ -27,17 +28,6 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
   const queryClient = useQueryClient();
 
-  const { isLoading: isCreating, mutate: createCabin } = useMutation({
-    mutationFn: createEditCabin,
-    onSuccess: () => {
-      toast.success("Cabin created successfully");
-      queryClient.invalidateQueries({ queryKey: ["cabins"] });
-      reset();
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
   const { isLoading: isEditing, mutate: editCabin } = useMutation({
     mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
     onSuccess: () => {
@@ -52,10 +42,19 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const isWorking = isCreating || isEditing;
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
-
+    
     if (isEditSession)
       editCabin({ newCabinData: { ...data, image: image }, id: editId });
-    else createCabin({ ...data, image: image });
+    else
+      createCabin(
+        { ...data, image: image },
+        {
+          onSuccess: (data) => {
+            console.log(data);
+            reset();
+          },
+        }
+      );
   }
   function onError(errors) {}
   return (
@@ -118,7 +117,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
               message: "Discount should be at most 100",
             },
             validate: (value) =>
-              value < getValues("regularPrice") ||
+              value <= getValues("regularPrice") ||
               "Discount should be less than regular price",
           })}
         />
