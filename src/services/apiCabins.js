@@ -46,7 +46,7 @@ export async function createEditCabin(newCabin, id) {
 
     throw new Error("Image upload failed and cabin was rolled back");
   }
-  return insertData;
+  // return insertData;
 }
 
 export async function updateCabin(id, updatedCabin) {
