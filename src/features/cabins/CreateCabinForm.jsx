@@ -12,7 +12,7 @@ import FormRow from "../../ui/FormRow";
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValue } = cabinToEdit;
   const { isCreating, createCabin } = useCreateCabin();
-  const { isEditing, editCabin } = useEditCabin;
+  const { isEditing, editCabin } = useEditCabin();
   const isWorking = isCreating || isEditing;
 
   const isEditSession = Boolean(editId);
@@ -28,7 +28,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
-
+      console.log(isEditSession)
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image: image }, id: editId },
