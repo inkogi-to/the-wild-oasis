@@ -1,13 +1,12 @@
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
-import CabinTable from "../features/cabins/CabinTable";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getCabins } from "../services/apiCabins";
-import CreateCabinForm from "../features/cabins/CreateCabinForm";
-import Button from "../ui/Button";
+
+import CabinTable from "../features/cabins/CabinTable";
+import  AddCabin  from "../features/cabins/AddCabin";
 
 function Cabins() {
-  const [showForm, setShowForm] = useState(false);
   useEffect(function () {
     async function fetchCabins() {
       const cabins = await getCabins();
@@ -23,10 +22,7 @@ function Cabins() {
       </Row>
       <Row type="vertical">
         <CabinTable />
-        <Button onClick={()=>setShowForm((show)=>!show)}>
-          Add new cabin
-        </Button>
-        {showForm && <CreateCabinForm />}
+        <AddCabin />
       </Row>
     </>
   );
